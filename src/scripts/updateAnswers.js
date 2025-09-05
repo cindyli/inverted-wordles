@@ -24,6 +24,7 @@
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const path = require("path");
+const readline = require("readline");
 
 let [filename, nStr, ...answers] = process.argv.slice(2);
 const n = parseInt(nStr, 10);
@@ -51,27 +52,42 @@ const outputDir = path.join(__dirname, "../_data");
 const outputFile = path.join(outputDir, `${filename}.json`);
 
 let previousData = {};
+
 if (fs.existsSync(outputFile)) {
-    try {
-        const fileContent = fs.readFileSync(outputFile, "utf8").trim();
-        if (fileContent) {
-            previousData = JSON.parse(fileContent);
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+    
+    rl.question(`File "${outputFile} already exists, do you want to append to it? (y/n): `, (answer) => {
+        rl.close();
+        if (answer.toLowerCase() === 'y' || answer.toLowerCase === 'yes') {
+            try {
+                const fileContent = fs.readFileSync(outputFile, "utf8").trim();
+                if (fileContent) {
+                    previousData = JSON.parse(fileContent);
+                }
+            } catch (err) {
+                console.error(`Error reading existing JSON: ${err}`);
+                process.exit(1);
+            }
+
+            // Generate n entries
+            for (let i = 0; i < n; i++) {
+                const id = uuidv4();
+                previousData[id] = {
+                    answers,
+                    createdTimestamp: new Date().toISOString()
+                };
+            }
+
+            fs.writeFileSync(outputFile, JSON.stringify(previousData, null, 2), "utf8");
+
+            console.log(`Added ${n} entries to ${outputFile}`);
+
+        } else {
+            console.log('Please remove the file and try again if you want to make a new file with the entries.');
+            process.exit(0);
         }
-    } catch (err) {
-        console.error(`Error reading existing JSON: ${err}`);
-        process.exit(1);
-    }
+    });
 }
-
-// Generate n entries
-for (let i = 0; i < n; i++) {
-    const id = uuidv4();
-    previousData[id] = {
-        answers,
-        createdTimestamp: new Date().toISOString()
-    };
-}
-
-fs.writeFileSync(outputFile, JSON.stringify(previousData, null, 2), "utf8");
-
-console.log(`Added ${n} entries to ${outputFile}`);

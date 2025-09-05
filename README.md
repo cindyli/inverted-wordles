@@ -100,9 +100,9 @@ You can find a Node.js script named updateAnswers.js in [src/scripts/](./src/scr
 3. **Use the Script Located in the src/scripts Directory**:
     - Inside of the [src/scripts/](./src/scripts/) directory of this repository, you can find a scripted named updateAnswers.js. Use this script to simulate a word cloud.
 4. **Script Instruction**:
-    - You can run the script by typing `node src/scripts/updateAnswers.js <filename> <n> <answer1> <answer2> ...` at the root directory. It takes parameters filename, n, and answers you want to simulate a word cloud with. The parameter filename is the file name you got from the step 2, the n parameter is the number of responses for the answers. Please note that if the answer has space characters, make sure to enclose it with quotation marks. 
+    - You can run the script by typing `node src/scripts/updateAnswers.js <filename> <n> <answer1> <answer2> ...` at the root directory. It takes parameters filename, n, and answers you want to simulate a word cloud with. The parameter filename is the file name you got from the step 2, the n parameter is the number of responses for the answers. Please note that if the answer has space characters, make sure to enclose it with quotation marks. Also, if a file with the filename already exists, the script will ask you if you want to append new entries; type `y` or `yes` to proceed, otherwise the operation will be cancelled.
 5. **Example**:
-    - `node src/scripts/updateAnswers.js xxxx-xxxx-answers.json 2 "answer1" "answer2" "answer3" ...` would append 2 responses of answer1, answer2 and answer3 to the answers file.
+    - `node src/scripts/updateAnswers.js xxxx-xxxx-answers.json 2 "answer1" "answer2" "answer3" ...` will append 2 answer sets of responses of answer1, answer2 and answer3 to the answers file.
 6. **View the Word Cloud**:
     - Once the answers file is generated/updated, you can create a pull request against the [main branch](https://github.com/inclusive-design/inverted-wordles) with the file, and when the pull request gets merged, you can view the word cloud in `https://inverted-wordclouds.inclusivedesign.ca/wordle/?id=xxxx-xxxx` (here id parameter is the file name without `-answers` suffix).
 
