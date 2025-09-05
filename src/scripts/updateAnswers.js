@@ -58,10 +58,10 @@ if (fs.existsSync(outputFile)) {
         input: process.stdin,
         output: process.stdout
     });
-    
+
     rl.question(`File "${outputFile} already exists, do you want to append to it? (y/n): `, (answer) => {
         rl.close();
-        if (answer.toLowerCase() === 'y' || answer.toLowerCase === 'yes') {
+        if (answer.toLowerCase() === "y" || answer.toLowerCase === "yes") {
             try {
                 const fileContent = fs.readFileSync(outputFile, "utf8").trim();
                 if (fileContent) {
@@ -86,7 +86,7 @@ if (fs.existsSync(outputFile)) {
             console.log(`Added ${n} entries to ${outputFile}`);
 
         } else {
-            console.log('Please remove the file and try again if you want to make a new file with the entries.');
+            console.log("Please remove the file and try again if you want to make a new file with the entries.");
             process.exit(0);
         }
     });
