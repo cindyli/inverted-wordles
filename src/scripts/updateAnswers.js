@@ -51,7 +51,7 @@ if (answers.length === 0) {
 const outputDir = path.join(__dirname, "../_data");
 const outputFile = path.join(outputDir, `${filename}.json`);
 
-function appendEntries(){
+function appendEntries() {
     let previousData = {};
     if (fs.existsSync(outputFile)) {
         try {
